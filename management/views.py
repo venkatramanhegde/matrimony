@@ -73,7 +73,7 @@ class SignUp(APIView):
 
         print(request.data)
         myfiles = request.FILES.getlist('photo1')
-        folder = 'media/photos/'  # document uploaded to datastore inside media folder
+        folder = 'media/'  # document uploaded to datastore inside media folder
         data = []
         file_data = {}
         for f in myfiles:
@@ -83,9 +83,16 @@ class SignUp(APIView):
             name = fs.save(filename, f)
             mediapath = folder + "{}"
             filepath = os.path.join(mediapath).format(name)
-            horoscope = ""
-            file_data = {'photo1': filepath, 'horoscope': horoscope,}
-        data.append(file_data)
+            # file_data = {'photo1': filepath, 'horoscope': horoscope,}
+        myfiles = request.FILES.getlist('jataga')
+        folder = 'media/'  # document uploaded to datastore inside media folder
+        for f in myfiles:
+            filename = str(f.name).replace(" ", "")
+            extension = filename.split('.')
+            fs = FileSystemStorage(location=folder)  # defaults to DATASTORE
+            name = fs.save(filename, f)
+            mediapath = folder + "{}"
+
 
 
          # context={'file_data': data,
@@ -157,7 +164,7 @@ class FilterUserPage(APIView):
                     if request.user.is_male:
                         # serializer = AdminPageSerializer(User.objects.filter(Q(is_user=True) & Q(is_female=True) & Q(date_of_birth__lte=request.user.date_of_birth)),
                         #                                  many=True)
-                        query_set = UserDetails.objects.filter(is_user=True, is_male=False)
+                        query_set = UserDetails.objects.filter(is_user=True, is_male=False, is_approved=True)
                         print(query_set)
                         if age_from:
                             print("age_from")
@@ -191,12 +198,12 @@ class FilterUserPage(APIView):
                 else:
                     if request.user.is_male:
                         serializer = UserDetailSerializer(UserDetails.objects.filter(
-                            Q(is_user=True) & Q(is_female=True) & Q(date_of_birth__gte=request.user.date_of_birth)),
+                            Q(is_user=True) & Q(is_female=True) & Q(date_of_birth__gte=request.user.date_of_birth) & Q(is_approved=True) ),
                                                          many=True)
                         return Response({"data": serializer.data}, status.HTTP_200_OK)
                     if request.user.is_female:
                         serializer = UserDetailSerializer(UserDetails.objects.filter(
-                            Q(is_user=True) & Q(is_male=True) & Q(date_of_birth__lte=request.user.date_of_birth)),
+                            Q(is_user=True) & Q(is_male=True) & Q(date_of_birth__lte=request.user.date_of_birth)& Q(is_approved=True) ),
                             many=True)
                         return Response({"data": serializer.data}, status.HTTP_200_OK)
         except Exception:

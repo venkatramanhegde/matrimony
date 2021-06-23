@@ -35,6 +35,7 @@ class SignUpSerializer(serializers.Serializer):
     caste = serializers.CharField(max_length=50, allow_blank=True)
     occupation = serializers.CharField(max_length=100, allow_blank=True)
     photo1 = serializers.FileField(allow_null=True)
+    horoscope = serializers.FileField(allow_null=True)
 
 
     class Meta:

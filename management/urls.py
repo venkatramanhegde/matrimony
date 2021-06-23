@@ -2,6 +2,7 @@ from django.conf.urls import url
 from .views import LoginAPIView, SignUp, AdminPage, FilterUserPage, LogoutAPIView, UserApproveView
 
 urlpatterns = [
+
     url(r'^login/', view=LoginAPIView.as_view(), name="login"),
     url(r'^sign_up/', view=SignUp.as_view(), name="sign-up"),
     url(r'^admin_page/', view=AdminPage.as_view(), name="admin-page"),

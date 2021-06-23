@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.template.backends import django
 from django.urls import reverse
+from django.views import View
 from rest_framework import status
 from django.conf import settings
 from .authentication import TokenAuthentication
@@ -254,4 +255,9 @@ class LogoutAPIView(APIView):
             return Response({"message": "logout failed"},
                             status=status.HTTP_400_BAD_REQUEST)
         return Response({"message": "Logout successful"}, status=status.HTTP_200_OK)
+
+
+class IndexView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, "index.html")
 

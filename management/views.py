@@ -228,9 +228,10 @@ class UserApproveView(APIView):
     authentication_classes = [TokenAuthentication,]
     def post(self, request):
         id = request.data['user_id']
-        user_det_obj = UserDetails.objects.get(user_id=id).update(is_approved=True)
-        user_obj = User.objects.get(id=id).update(is_approved=True)
-        return Response({"msg": "Used approved successfully"})
+        print(id)
+        user_det_obj = UserDetails.objects.filter(user_id=id).update(is_approved=True)
+        user_obj = User.objects.filter(id=id).update(is_approved=True)
+        return Response({"msg": "User approved successfully"})
 
 
 class LogoutAPIView(APIView):

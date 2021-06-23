@@ -109,9 +109,9 @@ WSGI_APPLICATION = 'matrimony.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'm3',
+        'NAME': 'jeevanasangati',
         'USER': 'postgres',
-        'PASSWORD': '1234',
+        'PASSWORD': 'June@1234',
         'HOST': 'localhost',
         'PORT': '5433',
     }

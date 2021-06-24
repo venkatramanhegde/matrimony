@@ -30,7 +30,7 @@ class User(AbstractBaseUser):
                               max_length=100,
                               null=True
                               )
-
+    is_reject = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     created_on = models.DateTimeField(auto_now_add=True)
     objects = UserManager()
@@ -39,7 +39,7 @@ class User(AbstractBaseUser):
 
 class UserDetails(models.Model):
     user = models.ForeignKey(User, on_delete=False)
-    hav_id = models.IntegerField(null=True)
+    hav_id = models.IntegerField(null=True, default="TSS2842")
     first_name = models.CharField(max_length=60, null=False)
     last_name = models.CharField(max_length=50, null=True, blank=True)
     phone_no = models.CharField(max_length=25, null=False, unique=True)
@@ -52,6 +52,7 @@ class UserDetails(models.Model):
                               null=True
                               )
     is_approved = models.BooleanField(default=False)
+    is_reject = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_user = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
@@ -73,11 +74,12 @@ class UserDetails(models.Model):
     mother_tongue = models.CharField(max_length=50, blank=True, null=True)
     occupation = models.CharField(max_length=60, blank=True, null=True)
     company_name = models.CharField(max_length=60, blank=True, null=True)
+    # qualificationandoccupation = models.CharField(max_length=100, null=True, blank=True)
+    # requirements = models.CharField(max_length=500, null=True, blank=True)
+
     horoscope = models.FileField(upload_to=get_file_path, blank=True, null=True)
     photos = ArrayField(models.CharField(max_length=500), null=True)
     photo1 = models.FileField(upload_to=get_file_path, blank=True, null=True)
-    photo2 = models.FileField(upload_to=get_file_path, blank=True, null=True)
-    photo3 = models.FileField(upload_to=get_file_path, blank=True, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
 
 

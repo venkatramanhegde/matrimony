@@ -229,7 +229,8 @@ class UserDetailSerializer(serializers.Serializer):
     occupation = serializers.CharField(max_length=100, allow_blank=True)
     date_of_birth = serializers.DateField()
     mother_tongue = serializers.CharField(max_length=50, allow_blank=True)
-
+    photo1 = serializers.FileField(allow_null=True)
+    horoscope = serializers.FileField(allow_null=True)
 
     class Meta:
         model = UserDetails

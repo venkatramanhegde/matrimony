@@ -74,8 +74,8 @@ class UserDetails(models.Model):
     mother_tongue = models.CharField(max_length=50, blank=True, null=True)
     occupation = models.CharField(max_length=60, blank=True, null=True)
     company_name = models.CharField(max_length=60, blank=True, null=True)
-    # qualificationandoccupation = models.CharField(max_length=100, null=True, blank=True)
-    # requirements = models.CharField(max_length=500, null=True, blank=True)
+    qualificationandoccupation = models.CharField(max_length=100, null=True, blank=True)
+    requirements = models.CharField(max_length=500, null=True, blank=True)
 
     horoscope = models.FileField(upload_to=get_file_path, blank=True, null=True)
     photos = ArrayField(models.CharField(max_length=500), null=True)

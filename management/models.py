@@ -30,7 +30,7 @@ class User(AbstractBaseUser):
                               max_length=100,
                               null=True
                               )
-    is_reject = models.BooleanField(default=False)
+    is_rejected = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     created_on = models.DateTimeField(auto_now_add=True)
     objects = UserManager()
@@ -52,7 +52,7 @@ class UserDetails(models.Model):
                               null=True
                               )
     is_approved = models.BooleanField(default=False)
-    is_reject = models.BooleanField(default=False)
+    is_rejected = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_user = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)

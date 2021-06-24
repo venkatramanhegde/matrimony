@@ -282,7 +282,7 @@ class ForgotPassword(View):
 class RejectUser(View):
     def post(self, request):
         id = request.data['user_id']
-        user_det_obj = UserDetails.objects.filter(user_id=id).update(is_reject=True)
-        user_obj = User.objects.filter(id=id).update(is_reject=True)
+        user_det_obj = UserDetails.objects.filter(user_id=id).update(is_rejected=True)
+        user_obj = User.objects.filter(id=id).update(is_rejected=True)
         return Response({"msg": "User rejected successfully"})
 

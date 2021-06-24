@@ -209,7 +209,7 @@ class UserDetailSerializer(serializers.Serializer):
     is_male = serializers.BooleanField()
     is_female = serializers.BooleanField()
     is_approved = serializers.BooleanField(default=False)
-    is_reject = serializers.BooleanField(default=False)
+    is_rejected = serializers.BooleanField(default=False)
     gender = serializers.CharField(max_length=10)
     age = serializers.IntegerField()
     father_name = serializers.CharField(max_length=60, allow_blank=True)

@@ -39,7 +39,7 @@ class User(AbstractBaseUser):
 
 class UserDetails(models.Model):
     user = models.ForeignKey(User, on_delete=False)
-    hav_id = models.IntegerField(null=True, default="TSS2842")
+    hav_id = models.CharField(null=True, default="TSS2842")
     first_name = models.CharField(max_length=60, null=False)
     last_name = models.CharField(max_length=50, null=True, blank=True)
     phone_no = models.CharField(max_length=25, null=False, unique=True)

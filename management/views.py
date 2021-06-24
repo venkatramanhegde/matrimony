@@ -84,7 +84,7 @@ class SignUp(APIView):
             mediapath = folder + "{}"
             filepath = os.path.join(mediapath).format(name)
             # file_data = {'photo1': filepath, 'horoscope': horoscope,}
-        myfiles = request.FILES.getlist('jataga')
+        myfiles = request.FILES.getlist('horoscope')
         folder = 'jataga/'  # document uploaded to datastore inside media folder
         for f in myfiles:
             filename = str(f.name).replace(" ", "")

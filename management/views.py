@@ -73,7 +73,7 @@ class SignUp(APIView):
 
         print(request.data)
         myfiles = request.FILES.getlist('photo1')
-        folder = 'media/'  # document uploaded to datastore inside media folder
+        folder = 'photos/'  # document uploaded to datastore inside media folder
         data = []
         file_data = {}
         for f in myfiles:
@@ -85,7 +85,7 @@ class SignUp(APIView):
             filepath = os.path.join(mediapath).format(name)
             # file_data = {'photo1': filepath, 'horoscope': horoscope,}
         myfiles = request.FILES.getlist('jataga')
-        folder = 'media/'  # document uploaded to datastore inside media folder
+        folder = 'jataga/'  # document uploaded to datastore inside media folder
         for f in myfiles:
             filename = str(f.name).replace(" ", "")
             extension = filename.split('.')

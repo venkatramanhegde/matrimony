@@ -214,11 +214,13 @@ class UserDetailSerializer(serializers.Serializer):
     height = serializers.FloatField()
     highest_education = serializers.CharField(max_length=100, allow_blank=True)
     photo1 = serializers.FileField()
+    horoscope = serializers.FileField()
+
 
     class Meta:
         model = UserDetails
         fields = ('id', 'user_id', 'hav_id', 'age', 'height', 'community', 'caste',
-                  'highest_education', 'is_approved', 'photo1')
+                  'highest_education', 'is_approved', 'photo1', 'horoscope')
 
 
 class LogedinUserDetailsSerializer(serializers.Serializer):

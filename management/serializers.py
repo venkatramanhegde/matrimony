@@ -202,7 +202,7 @@ class UserPageSerializer(serializers.Serializer):
 class UserDetailSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     user_id = serializers.IntegerField()
-    hav_id = serializers.IntegerField()
+    hav_id = serializers.CharField(max_length=25)
     first_name = serializers.CharField(max_length=60, allow_blank=False)
     last_name = serializers.CharField(max_length=50, allow_blank=True)
     phone_no = serializers.CharField(max_length=25, allow_blank=True)

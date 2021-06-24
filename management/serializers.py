@@ -202,25 +202,40 @@ class UserPageSerializer(serializers.Serializer):
 class UserDetailSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     user_id = serializers.IntegerField()
+    hav_id = serializers.IntegerField()
     first_name = serializers.CharField(max_length=60, allow_blank=False)
+    last_name = serializers.CharField(max_length=50, allow_blank=True)
     phone_no = serializers.CharField(max_length=25, allow_blank=True)
     is_male = serializers.BooleanField()
     is_female = serializers.BooleanField()
     is_approved = serializers.BooleanField(default=False)
+    is_reject = serializers.BooleanField(default=False)
     gender = serializers.CharField(max_length=10)
     age = serializers.IntegerField()
+    father_name = serializers.CharField(max_length=60, allow_blank=True)
+    mother_name = serializers.CharField(max_length=60, allow_blank=True)
+    address = serializers.CharField(max_length=250, allow_blank=True)
     community = serializers.CharField(max_length=50, allow_blank=True)
     caste = serializers.CharField(max_length=50, allow_blank=True)
+    gotra = serializers.CharField(max_length=50, allow_blank=True)
+    nakshatra = serializers.CharField(max_length=50, allow_blank=True)
+    rashi = serializers.CharField(max_length=50, allow_blank=True)
+    material_status = serializers.CharField(max_length=50, allow_blank=True)
     height = serializers.FloatField()
+    weight = serializers.FloatField()
+    job_position = serializers.CharField(max_length=100, allow_blank=True)
     highest_education = serializers.CharField(max_length=100, allow_blank=True)
-    photo1 = serializers.FileField()
-    horoscope = serializers.FileField()
+    company_name = serializers.CharField(max_length=100, allow_blank=True)
+    occupation = serializers.CharField(max_length=100, allow_blank=True)
+    date_of_birth = serializers.DateField()
+    mother_tongue = serializers.CharField(max_length=50, allow_blank=True)
 
 
     class Meta:
         model = UserDetails
-        fields = ('id', 'user_id', 'hav_id', 'age', 'height', 'community', 'caste',
-                  'highest_education', 'is_approved', 'photo1', 'horoscope')
+        # fields = ('id', 'user_id', 'hav_id', 'age', 'height', 'community', 'caste',
+        #           'highest_education', 'is_approved', 'photo1', 'horoscope')
+        fields = ('__all__')
 
 
 class LogedinUserDetailsSerializer(serializers.Serializer):
@@ -234,7 +249,6 @@ class LogedinUserDetailsSerializer(serializers.Serializer):
     date_of_birth = serializers.DateField()
     # is_approved = serializers.BooleanField()
     is_admin = serializers.BooleanField()
-
     height = serializers.FloatField()
     weight = serializers.FloatField()
     community = serializers.CharField(max_length=50, allow_blank=True)

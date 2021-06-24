@@ -35,6 +35,8 @@ class LoginAPIView(APIView):
 
         serializer = LoginSerializer(data=request.data)
         user1 = authenticate(phone_no=request.data.get('phone_no'), password=request.data.get('password'))
+        if not user1:
+            return Response("invalid credentials")
         login(request, user1)
         token = Token.objects.create(
             user=user1)  # if authenticated successfully, token is generated for that user.(ex:8953636ea742ba4d8ce22b0f2d6001299dc6b198)
@@ -267,4 +269,20 @@ class LogoutAPIView(APIView):
 class IndexView(View):
     def get(self, request, *args, **kwargs):
         return render(request, "index.html")
+
+
+class ForgotPassword(View):
+    def post(self, request):
+        user_id = User.objects.get(phone_no=request.data["phone_no"])
+        user_id.set_password(phone_no=request.data["phone_no"])
+
+        return Response({"message": "Password updated successful"}, status=status.HTTP_200_OK)
+
+
+class RejectUser(View):
+    def post(self, request):
+        id = request.data['user_id']
+        user_det_obj = UserDetails.objects.filter(user_id=id).update(is_reject=True)
+        user_obj = User.objects.filter(id=id).update(is_reject=True)
+        return Response({"msg": "User rejected successfully"})
 

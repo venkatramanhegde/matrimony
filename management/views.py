@@ -238,9 +238,10 @@ class UserApproveView(APIView):
     authentication_classes = [TokenAuthentication,]
     def post(self, request):
         id = request.data['user_id']
-        user_det_obj = UserDetails.objects.filter(user_id=id).update(is_approved=True)
-        user_obj = User.objects.filter(id=id).update(is_approved=True)
+        user_det_obj = UserDetails.objects.filter(user_id=id).update(is_approved=True, is_rejected=False)
+        user_obj = User.objects.filter(id=id).update(is_approved=True, is_rejected=True)
         return Response({"msg": "User approved successfully"})
+
 
 
 class LogoutAPIView(APIView):
@@ -270,7 +271,7 @@ class IndexView(View):
         return render(request, "index.html")
 
 
-class ForgotPassword(View):
+class ForgotPassword(APIView):
     permission_classes = (AllowAny,)
     def post(self, request):
         user_id = User.objects.get(phone_no=request.data["phone_no"])
@@ -279,11 +280,11 @@ class ForgotPassword(View):
         return Response({"message": "Password updated successful"}, status=status.HTTP_200_OK)
 
 
-class RejectUser(View):
+class RejectUser(APIView):
     authentication_classes = [TokenAuthentication, ]
     def post(self, request):
         id = request.data['user_id']
-        user_det_obj = UserDetails.objects.filter(user_id=id).update(is_rejected=True)
-        user_obj = User.objects.filter(id=id).update(is_rejected=True)
+        user_det_obj = UserDetails.objects.filter(user_id=id).update(is_approved=False, is_rejected=True)
+        user_obj = User.objects.filter(id=id).update(is_approved=False, is_rejected=True)
         return Response({"msg": "User rejected successfully"})
 

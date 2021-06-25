@@ -39,6 +39,8 @@ class SignUpSerializer(serializers.Serializer):
     horoscope = serializers.FileField(allow_null=True)
     nakshatra = serializers.CharField(max_length=50, allow_blank=True)
     rashi = serializers.CharField(max_length=50, allow_blank=True)
+    address = serializers.CharField(max_length=250, allow_blank=True, required=False)
+    highest_education = serializers.CharField(max_length=100, allow_blank=True, required=False)
 
     class Meta:
         model = User, UserDetails
@@ -129,7 +131,7 @@ class UpdateUserSerializer(serializers.Serializer):
     age = serializers.IntegerField()
     father_name = serializers.CharField(max_length=60, allow_blank=True)
     mother_name = serializers.CharField(max_length=60, allow_blank=True)
-    address = serializers.CharField(max_length=250, allow_blank=True)
+    address = serializers.CharField(max_length=250, allow_blank=True, required=False)
     community = serializers.CharField(max_length=50, allow_blank=True)
     caste = serializers.CharField(max_length=50, allow_blank=True)
     gotra = serializers.CharField(max_length=50, allow_blank=True)

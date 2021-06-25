@@ -28,7 +28,7 @@ class SignUpSerializer(serializers.Serializer):
     gender = serializers.CharField(max_length=10)
     email = serializers.EmailField(max_length=100, allow_blank=True)
     date_of_birth = serializers.DateField()
-    age = serializers.IntegerField()
+    age = serializers.IntegerField(required=False)
     height = serializers.FloatField()
     weight = serializers.FloatField()
     gotra = serializers.CharField(max_length=50, allow_blank=True)

@@ -238,7 +238,6 @@ class UserApproveView(APIView):
     authentication_classes = [TokenAuthentication,]
     def post(self, request):
         id = request.data['user_id']
-        print(id)
         user_det_obj = UserDetails.objects.filter(user_id=id).update(is_approved=True)
         user_obj = User.objects.filter(id=id).update(is_approved=True)
         return Response({"msg": "User approved successfully"})
@@ -272,8 +271,7 @@ class IndexView(View):
 
 
 class ForgotPassword(View):
-    authentication_classes = [TokenAuthentication, ]
-
+    permission_classes = (AllowAny,)
     def post(self, request):
         user_id = User.objects.get(phone_no=request.data["phone_no"])
         user_id.set_password(phone_no=request.data["phone_no"])
@@ -283,7 +281,6 @@ class ForgotPassword(View):
 
 class RejectUser(View):
     authentication_classes = [TokenAuthentication, ]
-
     def post(self, request):
         id = request.data['user_id']
         user_det_obj = UserDetails.objects.filter(user_id=id).update(is_rejected=True)

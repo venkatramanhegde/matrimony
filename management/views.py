@@ -17,6 +17,7 @@ from rest_framework.response import Response
 from .serializers import SignUpSerializer, LoginSerializer, AdminPageSerializer, UserPageSerializer,\
     UpdateUserSerializer, LogedinUserDetailsSerializer, UserDetailSerializer
 from .models import User, UserDetails, Token
+from datetime import date
 
 
 class LoginAPIView(APIView):
@@ -95,12 +96,11 @@ class SignUp(APIView):
             name = fs.save(filename, f)
             mediapath = folder + "{}"
 
+        today = date.today()
+        age = today.year - int(request.data["date_of_birth"][:4])
+        user_add = self.serializer_class(data=request.data, context={'file_data': data, 'age': age})
 
-
-         # context={'file_data': data,
-
-        user_add = self.serializer_class(data=request.data, context={'file_data': data})
-        print(request.data)
+        print(age)
         if user_add.is_valid():
             user_add.save()
             return Response({"msg": "user added successfully"}, status=status.HTTP_201_CREATED)

@@ -16,6 +16,7 @@ class LoginSerializer(serializers.Serializer):
 
 class SignUpSerializer(serializers.Serializer):
     """This is the serializer used for signup in user"""
+    hav_id = serializers.CharField(max_length=25, allow_blank=True, required=False)
     first_name = serializers.CharField(max_length=60, allow_blank=False)
     father_name = serializers.CharField(max_length=60, allow_blank=True)
     phone_no = serializers.CharField(max_length=25, allow_blank=True)
@@ -27,7 +28,7 @@ class SignUpSerializer(serializers.Serializer):
     gender = serializers.CharField(max_length=10)
     email = serializers.EmailField(max_length=100, allow_blank=True)
     date_of_birth = serializers.DateField()
-    # age = serializers.IntegerField()
+    age = serializers.IntegerField()
     height = serializers.FloatField()
     weight = serializers.FloatField()
     gotra = serializers.CharField(max_length=50, allow_blank=True)
@@ -36,7 +37,8 @@ class SignUpSerializer(serializers.Serializer):
     occupation = serializers.CharField(max_length=100, allow_blank=True)
     photo1 = serializers.FileField(allow_null=True)
     horoscope = serializers.FileField(allow_null=True)
-
+    nakshatra = serializers.CharField(max_length=50, allow_blank=True)
+    rashi = serializers.CharField(max_length=50, allow_blank=True)
 
     class Meta:
         model = User, UserDetails
@@ -56,6 +58,7 @@ class SignUpSerializer(serializers.Serializer):
                                    )
         user.set_password(validated_data.get("password"))
         user_detail=UserDetails.objects.create(**validated_data, user_id=user.id,
+                                               age=self.context.get('age')
                                                # father_name=validated_data.get("father_name"),
                                                # phone_no=validated_data.get("phone_no"),
                                                # is_male=validated_data.get("is_male"),

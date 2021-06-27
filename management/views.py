@@ -50,7 +50,12 @@ class LoginAPIView(APIView):
             # return HttpResponseRedirect(reverse('admin_page'))
 
         else:
-            serializer = LogedinUserDetailsSerializer(UserDetails.objects.filter(user_id=request.user.id), many=True)
+            if user1.is_approved:
+
+                serializer = LogedinUserDetailsSerializer(UserDetails.objects.filter(user_id=request.user.id), many=True)
+                return Response({"data": serializer.data, "user_token":user_token}, status.HTTP_200_OK)
+            else:
+                return Response({"data":"Your profile is under review. Please contact 8792737236 in case of any clarification or question"}, status=401)
 
             # if request.user.is_male:
                 # serializer = AdminPageSerializer(UserDetails.objects.filter(Q(is_user=True) & Q(is_female=True)) ,
@@ -61,7 +66,6 @@ class LoginAPIView(APIView):
                 # serializer = AdminPageSerializer(User.objects.filter(
                 #     Q(is_user=True) & Q(is_male=True) & Q(date_of_birth__gte=request.user.date_of_birth)),
                 #                                  many=True)
-            return Response({"data": serializer.data, "user_token":user_token}, status.HTTP_200_OK)
         return Response("User logedin successfull")
 
 
@@ -271,10 +275,7 @@ class IndexView(View):
         return render(request, "index.html")
 
 
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
-@method_decorator(csrf_exempt, name='dispatch')
-class ForgotPassword(View):
+class ForgotPassword(APIView):
     permission_classes = (AllowAny,)
     def post(self, request):
         user_id = User.objects.get(phone_no=request.data["phone_no"])

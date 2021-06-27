@@ -3,7 +3,7 @@ import os
 from django.contrib.auth import authenticate, login, logout
 from django.core.files.storage import FileSystemStorage
 from django.db.models import Q
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.template.backends import django
 from django.urls import reverse
@@ -55,7 +55,7 @@ class LoginAPIView(APIView):
                 serializer = LogedinUserDetailsSerializer(UserDetails.objects.filter(user_id=request.user.id), many=True)
                 return Response({"data": serializer.data, "user_token":user_token}, status.HTTP_200_OK)
             else:
-                return Response({"data":"Your profile is under review. Please contact 8792737236 in case of any clarification or question"}, status=401)
+                return HttpResponse("Your profile is under review. Please contact 8792737236 in case of any clarification or question", status=401)
 
             # if request.user.is_male:
                 # serializer = AdminPageSerializer(UserDetails.objects.filter(Q(is_user=True) & Q(is_female=True)) ,
@@ -280,7 +280,7 @@ class ForgotPassword(APIView):
     def post(self, request):
         user_id = User.objects.get(phone_no=request.data["phone_no"])
         user_id.set_password(request.data["password"])
-
+        user_id.save()
         return JsonResponse({"message": "Password updated successful"}, status=200)
 
 

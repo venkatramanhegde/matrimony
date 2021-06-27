@@ -271,15 +271,14 @@ class IndexView(View):
         return render(request, "index.html")
 
 
-from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-@method_decorator(csrf_exempt, name='dispatch')
+@csrf_exempt
 class ForgotPassword(APIView):
     permission_classes = (AllowAny,)
     serializer_class = LoginSerializer
     def post(self, request):
         user_id = User.objects.get(phone_no=request.data["phone_no"])
-        user_id.set_password(phone_no=request.data["phone_no"])
+        user_id.set_password(password=request.data["password"])
 
         return Response({"message": "Password updated successful"}, status=status.HTTP_200_OK)
 

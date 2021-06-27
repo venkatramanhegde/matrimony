@@ -273,7 +273,7 @@ class IndexView(View):
 
 from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
-class ForgotPassword(APIView):
+class ForgotPassword(View):
     permission_classes = (AllowAny,)
     serializer_class = LoginSerializer
     def post(self, request):

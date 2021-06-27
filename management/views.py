@@ -201,12 +201,12 @@ class FilterUserPage(APIView):
                 else:
                     if request.user.is_male:
                         serializer = UserDetailSerializer(UserDetails.objects.filter(
-                            Q(is_user=True) & Q(is_female=True) & Q(date_of_birth__gte=request.user.date_of_birth) & Q(is_approved=True) ),
+                            Q(is_user=True) & Q(is_female=True) & Q(is_approved=True)),
                                                          many=True)
                         return Response({"data": serializer.data}, status.HTTP_200_OK)
                     if request.user.is_female:
                         serializer = UserDetailSerializer(UserDetails.objects.filter(
-                            Q(is_user=True) & Q(is_male=True) & Q(date_of_birth__lte=request.user.date_of_birth)& Q(is_approved=True) ),
+                            Q(is_user=True) & Q(is_male=True) & Q(is_approved=True)),
                             many=True)
                         return Response({"data": serializer.data}, status.HTTP_200_OK)
         except Exception:

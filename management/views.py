@@ -3,7 +3,7 @@ import os
 from django.contrib.auth import authenticate, login, logout
 from django.core.files.storage import FileSystemStorage
 from django.db.models import Q
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.template.backends import django
 from django.urls import reverse
@@ -274,12 +274,13 @@ class IndexView(View):
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 @method_decorator(csrf_exempt, name='dispatch')
-class ForgotPassword(APIView):
+class ForgotPassword(View):
+    permission_classes = (AllowAny,)
     def post(self, request):
         user_id = User.objects.get(phone_no=request.data["phone_no"])
         user_id.set_password(password=request.data["password"])
 
-        return Response({"message": "Password updated successful"}, status=status.HTTP_200_OK)
+        return JsonResponse({"message": "Password updated successful"}, status=200)
 
 
 class RejectUser(APIView):

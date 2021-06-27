@@ -146,17 +146,12 @@ class FilterUserPage(APIView):
             religion = request.data.get("religion", None)
             cast = request.data.get("cast", None)
             occupation = request.data.get("occupation", None)
-            print(height_from)
             if "filter" in request.data:
                 if request.user.is_admin:
                     query_set = UserDetails.objects.filter(is_user=True)
                     if age_from:
                         query_set = query_set.filter(Q(age__gte=age_from) and Q(age__lte=age_to))
-                        print(query_set)
-
                     if height_from:
-                        print("height_from")
-
                         query_set = query_set.filter(Q(height_from__gte=age_from) and Q(height_to__lte=age_to))
                     if religion:
                         query_set = query_set.filter(community=religion)
@@ -171,17 +166,10 @@ class FilterUserPage(APIView):
                         # serializer = AdminPageSerializer(User.objects.filter(Q(is_user=True) & Q(is_female=True) & Q(date_of_birth__lte=request.user.date_of_birth)),
                         #                                  many=True)
                         query_set = UserDetails.objects.filter(is_user=True, is_male=False, is_approved=True)
-                        print(query_set)
                         if age_from:
-                            print("age_from")
-
                             query_set = query_set.filter(age__gte=age_from, age__lte=age_to)
-                            print(query_set)
-
                         if height_from:
-                            print("height_from")
                             query_set = query_set.filter(height__gte=height_from, height__lte=height_to)
-                            print(query_set)
                         if religion:
                             query_set = query_set.filter(community=religion)
                         if cast:
@@ -192,13 +180,22 @@ class FilterUserPage(APIView):
                         serializer = UserDetailSerializer(query_set, many=True)
                         return Response({"data": serializer.data}, status.HTTP_200_OK)
                     if request.user.is_female:
-                        serializer = UserDetailSerializer(User.objects.filter(
-                            Q(is_user=True) & Q(is_male=True) & Q(date_of_birth__gte=request.user.date_of_birth)),
-                            many=True)
+                        query_set = UserDetails.objects.filter(is_user=True, is_male=True, is_approved=True)
+                        if age_from:
+                            query_set = query_set.filter(age__gte=age_from, age__lte=age_to)
+                        if height_from:
+                            query_set = query_set.filter(height__gte=height_from, height__lte=height_to)
+                        if religion:
+                            query_set = query_set.filter(community=religion)
+                        if cast:
+                            query_set = query_set.filter(cast=cast)
+                        if occupation:
+                            query_set = query_set.filter(occupation=occupation)
+
+                        serializer = UserDetailSerializer(query_set, many=True)
                         return Response({"data": serializer.data}, status.HTTP_200_OK)
             else:
                 if request.user.is_admin:
-                    print("asas")
                     serializer = UserDetailSerializer(UserDetails.objects.filter(is_user=True), many=True)
                     return Response({"data": serializer.data}, status.HTTP_200_OK)
                 else:

@@ -30,7 +30,7 @@ class SignUpSerializer(serializers.Serializer):
     date_of_birth = serializers.DateField()
     age = serializers.IntegerField(required=False)
     height = serializers.FloatField()
-    weight = serializers.FloatField()
+    weight = serializers.FloatField(required=False)
     gotra = serializers.CharField(max_length=50, allow_blank=True)
     community = serializers.CharField(max_length=50, allow_blank=True)
     caste = serializers.CharField(max_length=50, allow_blank=True)
@@ -41,6 +41,7 @@ class SignUpSerializer(serializers.Serializer):
     rashi = serializers.CharField(max_length=50, allow_blank=True)
     address = serializers.CharField(max_length=250, allow_blank=True, required=False)
     highest_education = serializers.CharField(max_length=100, allow_blank=True, required=False)
+    requirements = serializers.CharField(max_length=500, allow_blank=True, required=False)
 
     class Meta:
         model = User, UserDetails
@@ -236,6 +237,7 @@ class UserDetailSerializer(serializers.Serializer):
     mother_tongue = serializers.CharField(max_length=50, allow_blank=True)
     photo1 = serializers.FileField(allow_null=True)
     horoscope = serializers.FileField(allow_null=True)
+    requirements = serializers.CharField()
 
     class Meta:
         model = UserDetails
